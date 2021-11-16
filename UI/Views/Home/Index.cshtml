@@ -1,0 +1,74 @@
+﻿@model List<UI.Models.CoinJarHeaderModel>
+
+@{
+    ViewData["Title"] = "Coin Jar";
+}
+
+<head>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+</head>
+
+<!-- Modal Add Coin Jar -->
+<div class="modal fade" id="coinJarModal" tabindex="-1" role="dialog" aria-labelledby="coinJarModalLabel" aria-hidden="true">
+    @await Html.PartialAsync("_AddCoinJar", new UI.Models.CoinJarHeaderModel())
+</div>
+
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        <p>@TempData["Error"].ToString()</p>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        <p>@TempData["Success"].ToString()</p>
+    </div>
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Coin Jar</h1>
+</div>
+
+<div class="form-row">
+    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" id="btnNew" data-target="#coinJarModal">
+        <i class="fa fa-plus"></i> New Record
+    </button>
+</div>
+<br />
+
+@if (Model != null)
+{
+    <table id="tblData" class="table responsive table-togglable table-hover dataTable-examples" style="width:100%">
+        <thead>
+            <tr>
+                <th>Volume</th>
+                <th>Amount</th>
+                <th class="notexport"></th>
+                <th class="notexport"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Volume)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                    <td><a class="btn btn-success btn-sm text-white getmoney" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Get Amount"><i class="fa fa-money"></i></a></td>
+                    <td><a class="btn btn-danger btn-sm text-white restdetails" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Rest"><i class="fa fa-repeat"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        <p>No content available.</p>
+    </div>
+}
+
+<script src="~/js/Views/Index/index.js?v=@DateTime.Now.Ticks.ToString()"></script>

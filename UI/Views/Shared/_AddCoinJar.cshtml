@@ -1,0 +1,66 @@
+﻿@model UI.Models.CoinJarHeaderModel
+
+<style type="text/css">
+    .modal-header {
+        background-color: #002664;
+        color: white;
+    }
+
+    .modal-title {
+        text-align: left;
+    }
+
+    .modal-content {
+        overflow: hidden;
+    }
+
+    .close {
+        color: #fff;
+        opacity: 1;
+    }
+</style>
+
+@using (Html.BeginForm("PostCoinJar", "Home", FormMethod.Post, new { onsubmit = "return LoadAddCoinJar()" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="coinJarModalLabel">Add Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-bd">
+                    <div class="panel-heading">
+                        <div class="view-header">
+                            <div class="header-title">
+                                <h3>Coin Jar Details</h3>
+                                <small><strong>Please complete the following fields, all fields are mandatory.</strong></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label>Volume</label>
+                                @Html.TextBoxFor(u => u.Volume, "{0:n2}", new { id = "Volume", @class = "form-control", @required = "required" })
+                                <span class="help-block small">Provide volume</span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Amount</label>
+                                @Html.TextBoxFor(u => u.Amount, "{0:n2}", new { id = "Amount", @class = "form-control", @required = "required" })
+                                <span class="help-block small">Provide amount, <strong class="text-danger">enter 56.36 or 56 not $56.36</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+}
